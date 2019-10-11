@@ -8,24 +8,26 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.dbms.fresh.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and().formLogin()
-                .loginPage("/login").permitAll().and().logout().permitAll();
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -33,9 +35,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationManager();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-        // auth.inMemoryAuthentication().withUser("light_crux").password("prabhash").roles("MANAGER");
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable();
+
+        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+
+        http.authorizeRequests().antMatchers("/user", "/user/**").access("hasAnyAuthority('customer')");
+
+        http.authorizeRequests().antMatchers("/manager", "/manager/**").access("hasAuthority('manager')");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+        http.authorizeRequests().and().formLogin().loginProcessingUrl("/j_spring_security_check")
+                .defaultSuccessUrl("/welcome").failureUrl("/login?error=true").usernameParameter("username")
+                .passwordParameter("password").and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
+
     }
 }

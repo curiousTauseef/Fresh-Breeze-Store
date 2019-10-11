@@ -1,12 +1,5 @@
 package com.dbms.fresh.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.dbms.fresh.dao.Userdao;
-import com.dbms.fresh.model.User;
-// import com.dbms.fresh.model.Role;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,25 +7,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.dbms.fresh.dao.Userdao;
+import com.dbms.fresh.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
-    private Userdao appuser;
+    Userdao userdao;
 
     @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) {
-        User user = appuser.findByUsername(username);
-        if (user == null)
-            throw new UsernameNotFoundException(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userdao.findByUsername(userName);
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        // for (Role role : user.getRoles()) {
-        grantedAuthorities.add(new SimpleGrantedAuthority("user"));
-        // }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                grantedAuthorities);
+        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+        GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
+        grantList.add(authority);
+
+        UserDetails userDetails = (UserDetails) new org.springframework.security.core.userdetails.User(
+                user.getUsername(), user.getPassword(), grantList);
+
+        return userDetails;
     }
+
 }

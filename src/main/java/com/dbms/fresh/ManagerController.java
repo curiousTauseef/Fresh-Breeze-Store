@@ -1,5 +1,6 @@
 package com.dbms.fresh;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,11 +10,13 @@ import com.dbms.fresh.dao.Employeedao;
 import com.dbms.fresh.dao.Productdao;
 import com.dbms.fresh.dao.Supplierdao;
 import com.dbms.fresh.dao.Supplyorderdao;
+import com.dbms.fresh.dao.Userdao;
 import com.dbms.fresh.model.Category;
 import com.dbms.fresh.model.Employee;
 import com.dbms.fresh.model.Product;
 import com.dbms.fresh.model.Supplier;
 import com.dbms.fresh.model.SupplyOrder;
+import com.dbms.fresh.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,11 +40,14 @@ public class ManagerController {
     Supplierdao sup;
     @Autowired
     Supplyorderdao sod;
+    @Autowired
+    Userdao userdao;
 
     @RequestMapping("")
-    public ModelAndView admin(ModelAndView model) {
-
-        model.addObject("mess", "hi");
+    public ModelAndView admin(Principal principal) {
+        ModelAndView model = new ModelAndView("managerhome");
+        User user = userdao.findByUsername(principal.getName());
+        model.addObject("mess", "hi " + user.getName());
         return model;
     }
 
@@ -292,4 +298,5 @@ public class ManagerController {
         model.addObject("name", sup.getSupplierbyId(supplier_id).getName());
         return model;
     }
+
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.dbms.fresh.model.Product;
 import com.dbms.fresh.model.SupplyOrder;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,7 +15,6 @@ public class User {
     private String account_no;
     private String role;
     private List<Orders> orders;
-    private List<Role> roles;
 
     public String getUsername() {
         return this.username;
@@ -111,13 +110,5 @@ public class User {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
-    }
-
-    public List<Role> getRoles() {
-        return this.roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 }

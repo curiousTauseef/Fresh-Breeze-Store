@@ -29,7 +29,6 @@ uri="http://www.springframework.org/tags" %>
           <th class="text-left">Id</th>
           <th class="text-left">Name</th>
           <th class="text-left">Selling Price</th>
-          <th class="text-left">Quantity Left</th>
           <th class="text-left">Category(Id)</th>
         </tr>
       </thead>
@@ -40,7 +39,6 @@ uri="http://www.springframework.org/tags" %>
             <td align="center">${product.product_id}</td>
             <td align="center">${product.name}</td>
             <td align="center">${product.selling_price}</td>
-            <td align="center">${product.quantity_left}</td>
             <td align="center">${product.category_id}</td>
           </tr>
         </c:forEach>
