@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.dbms.fresh.model.OrderItem;
 import com.dbms.fresh.model.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -99,5 +100,34 @@ public class Ordersdao {
     public void createOrderItem(int order_id, int product_id, int quantity) {
         String sql = "insert into order_item (order_id,product_id,quantity) values (?,?,?)";
         jt.update(sql, order_id, product_id, quantity);
+    }
+
+    public List<OrderItem> getItemsByOrderId(int order_id) {
+        String sql = "select * from order_item where order_id='" + order_id + "'";
+        return jt.query(sql, new RowMapper<OrderItem>() {
+
+            public OrderItem mapRow(ResultSet row, int rowNum) throws SQLException {
+                OrderItem u = new OrderItem();
+                u.setOrder_item_id(row.getInt("order_item_id"));
+                u.setOrder_id(row.getInt("order_id"));
+                u.setProduct_id(row.getInt("product_id"));
+                u.setQuantity(row.getInt("quantity"));
+                return u;
+            }
+        });
+    }
+
+    public void saveFeedback(String type, int rating, String comment, int order_id) {
+        String sql = "insert into feedback (type,rating,comment,order_id) values (?,?,?,?)";
+        jt.update(sql, type, rating, comment, order_id);
+    }
+
+    public boolean feebackExist(int order_id) {
+        String sql = "select count(*) from feedback where order_id=?";
+        int p = jt.queryForObject(sql, Integer.class, order_id);
+        if (p == 0)
+            return false;
+        else
+            return true;
     }
 }

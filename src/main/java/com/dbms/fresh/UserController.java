@@ -1,6 +1,8 @@
 package com.dbms.fresh;
 
 import java.security.Principal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,10 +10,14 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +30,9 @@ import com.dbms.fresh.dao.Productdao;
 import com.dbms.fresh.dao.Userdao;
 import com.dbms.fresh.model.Cart;
 import com.dbms.fresh.model.Category;
+import com.dbms.fresh.model.Feedback;
+import com.dbms.fresh.model.OrderItem;
+import com.dbms.fresh.model.Orders;
 import com.dbms.fresh.model.Payment;
 import com.dbms.fresh.model.Product;
 import com.dbms.fresh.model.Quantity;
@@ -43,6 +52,8 @@ public class UserController {
     Ordersdao ord;
     @Autowired
     Paymentdao pay;
+    @Autowired
+    JdbcTemplate jt;
 
     @RequestMapping("")
     public ModelAndView admin(Principal principal) {
@@ -181,6 +192,65 @@ public class UserController {
         }
         pay.save(payment.getMethod(), price, order_id);
         return "redirect:/user";
+    }
+
+    @RequestMapping(value = "/vieworders", method = RequestMethod.GET)
+    public ModelAndView vieworders(Principal principal) {
+        ModelAndView model = new ModelAndView("alluserorders");
+        User user = userdao.findByUsername(principal.getName());
+        String username = user.getUsername();
+        // List<Orders> allorders = ord.getOrdersbyusername(username);
+        // List<Payment> payments = new ArrayList<Payment>();
+        Map<Integer, Payment> payments = new HashMap<Integer, Payment>();
+        List<Orders> allorders = jt.query("select * from orders natural join payment",
+                new ResultSetExtractor<List<Orders>>() {
+
+                    public List<Orders> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Orders> allOrders = new ArrayList<Orders>();
+                        while (row.next()) {
+                            Orders u = new Orders();
+                            Payment p = new Payment();
+                            u.setOrder_id(row.getInt("order_id"));
+                            u.setStatus(row.getString("status"));
+                            u.setOrder_date(row.getDate("order_date"));
+                            u.setUsername(row.getString("username"));
+                            p.setPayment_id(row.getInt("payment_id"));
+                            p.setPayment_date(row.getDate("payment_date"));
+                            p.setMethod(row.getString("method"));
+                            p.setPrice(row.getDouble("price"));
+                            p.setOrder_id(row.getInt("order_id"));
+                            allOrders.add(u);
+                            payments.put(row.getInt("order_id"), p);
+                        }
+                        return allOrders;
+                    }
+                });
+        model.addObject("payments", payments);
+        model.addObject("username", username);
+        model.addObject("allorders", allorders);
+        return model;
+    }
+
+    @RequestMapping(value = "/viewdetails/{order_id}", method = RequestMethod.GET)
+    public ModelAndView viewdetails(Principal principal, @PathVariable("order_id") int order_id) {
+        ModelAndView model = new ModelAndView("orderdetails");
+        List<OrderItem> details = ord.getItemsByOrderId(order_id);
+        return model;
+    }
+
+    @RequestMapping(value = "/addfeedback/{order_id}", method = RequestMethod.GET)
+    public ModelAndView addfeedback(Principal principal, @PathVariable("order_id") int order_id) {
+        ModelAndView model = new ModelAndView("feedback");
+        Feedback feedback = new Feedback();
+        feedback.setOrder_id(order_id);
+        model.addObject("feedback", feedback);
+        return model;
+    }
+
+    @RequestMapping(value = "/processfeedback", method = RequestMethod.POST)
+    public String registeremployeeProcess(@Valid @ModelAttribute("feedback") Feedback f, BindingResult result) {
+        ord.saveFeedback(f.getType(), f.getRating(), f.getComment(), f.getOrder_id());
+        return "redirect:/user/vieworders";
     }
 
 }

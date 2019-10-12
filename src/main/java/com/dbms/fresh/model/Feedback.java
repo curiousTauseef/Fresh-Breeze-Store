@@ -2,7 +2,7 @@ package com.dbms.fresh.model;
 
 public class Feedback {
     private int feedback_id;
-    private int type;
+    private String type;
     private int rating;
     private int order_id;
     private String comment;
@@ -15,11 +15,11 @@ public class Feedback {
         this.feedback_id = feedback_id;
     }
 
-    public int getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
