@@ -34,9 +34,7 @@
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/dbms/admin/addnotification">Add Notifications</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/dbms/j_spring_security_logout">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>
           </ul>
         </li>
     </ul>

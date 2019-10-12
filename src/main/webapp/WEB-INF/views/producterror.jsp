@@ -1,9 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<spring:url var="css" value="/css" />
 <jsp:include page="usernavbar.jsp" />
 
 <htmL>
+    <link rel="stylesheet" type="text/css" href="${css}/css1/table.css" />
 <style>
 @media(min-width: 768px) {
   .field-label-responsive {
@@ -27,6 +29,27 @@
 </head>
 <body>
 <br><br><br>
+<div class="table-title">
+      <h3 align="center">These products don't satisfy your quantity needs.</h3>
+      <br />
+    </div>
+<table class="table-fill">
+      <thead>
+        <tr>
+          <th class="text-left">Product</th>
+          <th class="text-left">Quantity Available</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-hover">
+        <c:forEach items="${error}" var="e_product">
+          <tr>
+            <td align="center">${e_product.name}</td>
+            <td align="center">${e_product.quantity_left}</td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
 <div class="container">
 		<form:form method="post" action="/user/finalprocessorder/" class="form-horizontal" role="form">
         <div class="row">

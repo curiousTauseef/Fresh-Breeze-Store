@@ -6,12 +6,9 @@ import com.dbms.fresh.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-// import com.dbms.fresh.model.RowMapperUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 @Transactional
 @Repository
@@ -19,13 +16,10 @@ public class Userdao {
 
     @Autowired
     JdbcTemplate jt;
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
 
     public void save(String username, String password, String name, String contact, String email, String house,
             String street, String city, String bank) {
         String sql = "insert into user (username, password,name,contact,email,house_no,street_name,city,account_no,role) values (?,?,?,?,?,?,?,?,?,?)";
-        // String encrytedPassword = this.passwordEncoder.encode(password);
         jt.update(sql, username, password, name, contact, email, house, street, city, bank, "customer");
     }
 

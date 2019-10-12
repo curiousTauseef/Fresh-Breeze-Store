@@ -40,7 +40,7 @@ public class Ordersdao {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, "processing");
+                ps.setString(1, "delivered");
                 ps.setString(2, currentDate);
                 ps.setString(3, username);
                 return ps;
@@ -96,4 +96,8 @@ public class Ordersdao {
         jt.update(sql);
     }
 
+    public void createOrderItem(int order_id, int product_id, int quantity) {
+        String sql = "insert into order_item (order_id,product_id,quantity) values (?,?,?)";
+        jt.update(sql, order_id, product_id, quantity);
+    }
 }

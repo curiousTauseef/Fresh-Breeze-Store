@@ -8,7 +8,6 @@ import com.dbms.fresh.service.UserService;
 import com.dbms.fresh.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
