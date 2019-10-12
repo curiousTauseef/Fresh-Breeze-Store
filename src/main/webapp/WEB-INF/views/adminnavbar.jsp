@@ -29,6 +29,7 @@
                 <li><a href="/manager/showallproducts">Manage Products</a></li>
                 <li><a href="/manager/showallemployees">Manage Employees</a></li>
                 <li><a href="/manager/showallsuppliers">Manage Suppliers</a></li>
+                <li><a href="/manager/showallusers">View Customers</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">

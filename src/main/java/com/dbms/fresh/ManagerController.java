@@ -1,24 +1,37 @@
 package com.dbms.fresh;
 
 import java.security.Principal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.dbms.fresh.dao.Categorydao;
 import com.dbms.fresh.dao.Employeedao;
+import com.dbms.fresh.dao.Ordersdao;
 import com.dbms.fresh.dao.Productdao;
 import com.dbms.fresh.dao.Supplierdao;
 import com.dbms.fresh.dao.Supplyorderdao;
 import com.dbms.fresh.dao.Userdao;
 import com.dbms.fresh.model.Category;
 import com.dbms.fresh.model.Employee;
+import com.dbms.fresh.model.Feedback;
+import com.dbms.fresh.model.OrderItem;
+import com.dbms.fresh.model.Orders;
+import com.dbms.fresh.model.Payment;
 import com.dbms.fresh.model.Product;
 import com.dbms.fresh.model.Supplier;
 import com.dbms.fresh.model.SupplyOrder;
 import com.dbms.fresh.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,7 +54,11 @@ public class ManagerController {
     @Autowired
     Supplyorderdao sod;
     @Autowired
+    Ordersdao ord;
+    @Autowired
     Userdao userdao;
+    @Autowired
+    JdbcTemplate jt;
 
     @RequestMapping("")
     public ModelAndView admin(Principal principal) {
@@ -273,8 +290,6 @@ public class ManagerController {
         List<Product> p = pro.showAllProducts();
         mod.addObject("products", p);
         mod.addObject("supplier", sup_id);
-        // List<Supplier> s = sup.showAllsuppliers();
-        // mod.addObject("suppliers", s);
         return mod;
     }
 
@@ -299,4 +314,80 @@ public class ManagerController {
         return model;
     }
 
+    @RequestMapping(value = "/showallusers", method = RequestMethod.GET)
+    public ModelAndView showallusers() {
+        ModelAndView model = new ModelAndView("adminallusers");
+        List<User> users = userdao.getAllusers();
+        model.addObject("users", users);
+        return model;
+    }
+
+    @RequestMapping(value = "/viewuserorders/{username}", method = RequestMethod.GET)
+    public ModelAndView viewuserorders(@PathVariable("username") String username) {
+        ModelAndView model = new ModelAndView("adminuserorders");
+        Map<Integer, Payment> payments = new HashMap<Integer, Payment>();
+        List<Orders> allorders = jt.query(
+                "select order_id,status,order_date,method,price from orders natural join payment where username='"
+                        + username + "'",
+                new ResultSetExtractor<List<Orders>>() {
+                    public List<Orders> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Orders> allOrders = new ArrayList<Orders>();
+                        while (row.next()) {
+                            Orders u = new Orders();
+                            Payment p = new Payment();
+                            u.setOrder_id(row.getInt("order_id"));
+                            u.setStatus(row.getString("status"));
+                            u.setOrder_date(row.getDate("order_date"));
+                            p.setMethod(row.getString("method"));
+                            p.setPrice(row.getDouble("price"));
+                            allOrders.add(u);
+                            payments.put(row.getInt("order_id"), p);
+                        }
+                        return allOrders;
+                    }
+                });
+        model.addObject("payments", payments);
+        model.addObject("allorders", allorders);
+        model.addObject("username", username);
+        return model;
+    }
+
+    @RequestMapping(value = "/viewuserorderdetails/{order_id}", method = RequestMethod.GET)
+    public ModelAndView viewuserorderdetails(@PathVariable("order_id") int order_id) {
+        ModelAndView model = new ModelAndView("viewuserorderdetails");
+        Map<Integer, Product> products = new HashMap<Integer, Product>();
+        List<OrderItem> allitems = jt
+                .query("select name,quantity,ord_item_id from product natural join order_item where order_id='"
+                        + order_id + "'", new ResultSetExtractor<List<OrderItem>>() {
+                            public List<OrderItem> extractData(ResultSet row) throws SQLException, DataAccessException {
+                                List<OrderItem> allOrderItem = new ArrayList<OrderItem>();
+                                while (row.next()) {
+                                    OrderItem u = new OrderItem();
+                                    Product p = new Product();
+                                    u.setOrd_item_id(row.getInt("ord_item_id"));
+                                    u.setQuantity(row.getInt("quantity"));
+                                    p.setName(row.getString("name"));
+                                    allOrderItem.add(u);
+                                    products.put(row.getInt("ord_item_id"), p);
+                                }
+                                return allOrderItem;
+                            }
+                        });
+        model.addObject("allitems", allitems);
+        model.addObject("products", products);
+        return model;
+    }
+
+    @RequestMapping(value = "/viewfeedback/{order_id}")
+    public ModelAndView viewfeedback(@PathVariable("order_id") int order_id) {
+        ModelAndView model = new ModelAndView("viewfeedback");
+        if (ord.feebackExist(order_id)) {
+            Feedback feedback = ord.getFeedback(order_id);
+            model.addObject("check", "true");
+            model.addObject("feedback", feedback);
+        } else {
+            model.addObject("check", "false");
+        }
+        return model;
+    }
 }

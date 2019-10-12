@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.dbms.fresh.model.Feedback;
 import com.dbms.fresh.model.OrderItem;
 import com.dbms.fresh.model.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,7 @@ public class Ordersdao {
 
             public OrderItem mapRow(ResultSet row, int rowNum) throws SQLException {
                 OrderItem u = new OrderItem();
-                u.setOrder_item_id(row.getInt("ord_item_id"));
+                u.setOrd_item_id(row.getInt("ord_item_id"));
                 u.setOrder_id(row.getInt("order_id"));
                 u.setProduct_id(row.getInt("product_id"));
                 u.setQuantity(row.getInt("quantity"));
@@ -120,6 +121,22 @@ public class Ordersdao {
     public void saveFeedback(String type, int rating, String comment, int order_id) {
         String sql = "insert into feedback (type,rating,comment,order_id) values (?,?,?,?)";
         jt.update(sql, type, rating, comment, order_id);
+    }
+
+    public Feedback getFeedback(int order_id) {
+        String sql = "select * from feedback where order_id='" + order_id + "'";
+        return jt.queryForObject(sql, new RowMapper<Feedback>() {
+
+            public Feedback mapRow(ResultSet row, int rowNum) throws SQLException {
+                Feedback u = new Feedback();
+                u.setFeedback_id(row.getInt("feedback_id"));
+                u.setType(row.getString("type"));
+                u.setRating(row.getInt("rating"));
+                u.setComment(row.getString("comment"));
+                u.setOrder_id(row.getInt("order_id"));
+                return u;
+            }
+        });
     }
 
     public boolean feebackExist(int order_id) {

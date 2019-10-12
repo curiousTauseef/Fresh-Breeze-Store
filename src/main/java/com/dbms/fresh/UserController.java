@@ -200,8 +200,10 @@ public class UserController {
         User user = userdao.findByUsername(principal.getName());
         String username = user.getUsername();
         Map<Integer, Payment> payments = new HashMap<Integer, Payment>();
+        Map<Integer, Boolean> checkfeedback = new HashMap<Integer, Boolean>();
         List<Orders> allorders = jt.query(
-                "select order_id,status,order_date,method,price from orders natural join payment",
+                "select order_id,status,order_date,method,price from orders natural join payment where username='"
+                        + username + "'",
                 new ResultSetExtractor<List<Orders>>() {
                     public List<Orders> extractData(ResultSet row) throws SQLException, DataAccessException {
                         List<Orders> allOrders = new ArrayList<Orders>();
@@ -215,10 +217,12 @@ public class UserController {
                             p.setPrice(row.getDouble("price"));
                             allOrders.add(u);
                             payments.put(row.getInt("order_id"), p);
+                            checkfeedback.put(row.getInt("order_id"), ord.feebackExist(row.getInt("order_id")));
                         }
                         return allOrders;
                     }
                 });
+        model.addObject("check", checkfeedback);
         model.addObject("payments", payments);
         model.addObject("username", username);
         model.addObject("allorders", allorders);

@@ -4,7 +4,7 @@ prefix="c" %> <%@taglib prefix="spring"
 uri="http://www.springframework.org/tags" %>
 
 <spring:url var="css" value="/css" />
-<jsp:include page="usernavbar.jsp" />
+<jsp:include page="adminnavbar.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <link rel="stylesheet" type="text/css" href="${css}/css1/table.css" />
@@ -31,7 +31,7 @@ uri="http://www.springframework.org/tags" %>
           <th class="text-left">Payment Method</th>
           <th class="text-left">Price</th>
           <th class="text-left">View Items</th>
-          <th class="text-left">Add Feedback</th>
+          <th class="text-left">View Feedback</th>
         </tr>
       </thead>
 
@@ -46,33 +46,19 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/user/viewdetails/${order.order_id}'"
+                onclick="window.location.href='/manager/viewuserorderdetails/${order.order_id}'"
               >
                 <span></span> Items
               </button>
             </td>
             <td class="text-center">
-              <c:choose>
-                <c:when test="${check.get(order.order_id)}">
-                  <button
-                    type="button"
-                    disabled
-                    class="btn btn-warning "
-                    onclick="window.location.href='/user/addfeedback/${order.order_id}'"
-                  >
-                    Add Feedback
-                  </button>
-                </c:when>
-                <c:otherwise>
-                  <button
-                    type="button"
-                    class="btn btn-warning "
-                    onclick="window.location.href='/user/addfeedback/${order.order_id}'"
-                  >
-                    Add Feedback
-                  </button>
-                </c:otherwise>
-              </c:choose>
+              <button
+                type="button"
+                class="btn btn-warning "
+                onclick="window.location.href='/manager/viewfeedback/${order.order_id}'"
+              >
+                View Feedback
+              </button>
             </td>
           </tr>
         </c:forEach>
