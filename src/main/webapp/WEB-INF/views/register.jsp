@@ -11,6 +11,10 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+    />
   </head>
 
   <body>

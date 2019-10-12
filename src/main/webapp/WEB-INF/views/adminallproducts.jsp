@@ -30,7 +30,7 @@ uri="http://www.springframework.org/tags" %>
           <th class="text-left">Name</th>
           <th class="text-left">Selling Price</th>
           <th class="text-left">Quantity Left</th>
-          <th class="text-left">Category(Id)</th>
+          <th class="text-left">Category</th>
           <th class="text-left">Increase/Decrease quantity</th>
           <th class="text-left">Edit product</th>
           <th class="text-left">Remove product</th>
@@ -44,7 +44,7 @@ uri="http://www.springframework.org/tags" %>
             <td align="center">${product.name}</td>
             <td align="center">${product.selling_price}</td>
             <td align="center">${product.quantity_left}</td>
-            <td align="center">${product.category_id}</td>
+            <td align="center">${category.get(product.category_id)}</td>
             <td class="text-center">
               <button
                 type="button"

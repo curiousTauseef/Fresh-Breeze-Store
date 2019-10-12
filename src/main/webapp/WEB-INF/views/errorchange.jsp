@@ -1,8 +1,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<spring:url var="css" value="/css" />
 <jsp:include page="adminnavbar.jsp" />
 
 <htmL>
+    <link rel="stylesheet" type="text/css" href="${css}/css1/table.css" />
 <style>
 @media(min-width: 768px) {
   .field-label-responsive {
@@ -26,6 +28,25 @@
 </head>
 <body>
 <br><br><br>
+<div class="table-title">
+      <h3 align="center">The product doesn't satisfy your quantity needs.</h3>
+      <br />
+    </div>
+<table class="table-fill">
+      <thead>
+        <tr>
+          <th class="text-left">Product</th>
+          <th class="text-left">Quantity Available</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-hover">
+          <tr>
+            <td align="center">${pr.name}</td>
+            <td align="center">${pr.quantity_left}</td>
+          </tr>
+      </tbody>
+    </table>
 <div class="container">
 		<form:form method="post" modelAttribute="product" action="/manager/updatequantity/" class="form-horizontal" role="form">
         <div class="row">

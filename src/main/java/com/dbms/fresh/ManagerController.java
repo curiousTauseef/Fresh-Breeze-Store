@@ -33,6 +33,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -137,7 +138,27 @@ public class ManagerController {
     @RequestMapping(value = "/showallcategories", method = RequestMethod.GET)
     public ModelAndView showallcategories() {
         ModelAndView model = new ModelAndView("adminallcategories");
-        List<Category> allcategories = cat.showAllCategories();
+        Map<Integer, String> employee = new HashMap<Integer, String>();
+        List<Category> allcategories = jt.query(
+                "select category_id,c.name,e.name,e.employee_id from category c,employee e where c.employee_id=e.employee_id",
+                new ResultSetExtractor<List<Category>>() {
+
+                    public List<Category> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Category> allCategory = new ArrayList<Category>();
+                        while (row.next()) {
+                            Category u = new Category();
+                            u.setCategory_id(row.getInt("category_id"));
+                            u.setName(row.getString("name"));
+                            u.setEmployee_id(row.getInt("employee_id"));
+                            allCategory.add(u);
+                            employee.put(row.getInt("employee_id"),
+                                    emp.getEmployeebyId(row.getInt("employee_id")).getName());
+                        }
+                        return allCategory;
+                    }
+
+                });
+        model.addObject("employee", employee);
         model.addObject("allcategories", allcategories);
         return model;
     }
@@ -182,7 +203,29 @@ public class ManagerController {
     @RequestMapping(value = "/showallproducts", method = RequestMethod.GET)
     public ModelAndView showallproducts() {
         ModelAndView model = new ModelAndView("adminallproducts");
-        List<Product> allproducts = pro.showAllProducts();
+        Map<Integer, String> category = new HashMap<Integer, String>();
+        List<Product> allproducts = jt.query(
+                "select product_id,p.name,selling_price,quantity_left,c.name,c.category_id from product p,category c where p.category_id=c.category_id",
+                new ResultSetExtractor<List<Product>>() {
+
+                    public List<Product> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Product> allProduct = new ArrayList<Product>();
+                        while (row.next()) {
+                            Product u = new Product();
+                            u.setProduct_id(row.getInt("product_id"));
+                            u.setName(row.getString("name"));
+                            u.setSelling_price(row.getDouble("selling_price"));
+                            u.setQuantity_left(row.getInt("quantity_left"));
+                            u.setCategory_id(row.getInt("category_id"));
+                            allProduct.add(u);
+                            category.put(row.getInt("category_id"),
+                                    cat.getCategorybyId(row.getInt("category_id")).getName());
+                        }
+                        return allProduct;
+                    }
+
+                });
+        model.addObject("category", category);
         model.addObject("allproducts", allproducts);
         return model;
     }
@@ -219,11 +262,21 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/updatequantity", method = RequestMethod.POST)
-    public String updatequantityProcess(@Valid @ModelAttribute("product") Product p, BindingResult result) {
+    public String updatequantityProcess(@Valid @ModelAttribute("product") Product p, BindingResult result, Model m) {
         Product pr = pro.getproductbyId(p.getProduct_id());
         int q = pr.getQuantity_left();
         if (q + p.getQuantity_left() >= 0)
             pro.updateProductquantity(p.getProduct_id(), q + p.getQuantity_left());
+        else {
+            Product product = new Product();
+            product.setProduct_id(p.getProduct_id());
+            product.setName(pr.getName());
+            product.setSelling_price(pr.getSelling_price());
+            product.setCategory_id(pr.getCategory_id());
+            m.addAttribute("product", product);
+            m.addAttribute("pr", pr);
+            return "errorchange";
+        }
         return "redirect:/manager/showallproducts";
     }
 

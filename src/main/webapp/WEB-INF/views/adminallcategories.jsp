@@ -28,7 +28,7 @@ uri="http://www.springframework.org/tags" %>
         <tr>
           <th class="text-left">Id</th>
           <th class="text-left">Name</th>
-          <th class="text-left">Managed by</th>
+          <th class="text-left">Managed by (Employee)</th>
           <th class="text-left">Edit category</th>
           <th class="text-left">Remove Category</th>
         </tr>
@@ -39,7 +39,7 @@ uri="http://www.springframework.org/tags" %>
           <tr>
             <td align="center">${category.category_id}</td>
             <td align="center">${category.name}</td>
-            <td align="center">${category.employee_id}</td>
+            <td align="center">${employee.get(category.employee_id)}</td>
             <td class="text-center">
               <button
                 type="button"

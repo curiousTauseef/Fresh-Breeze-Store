@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dbms.fresh.dao.Categorydao;
+import com.dbms.fresh.dao.Employeedao;
 import com.dbms.fresh.dao.Ordersdao;
 import com.dbms.fresh.dao.Paymentdao;
 import com.dbms.fresh.dao.Productdao;
@@ -53,6 +54,8 @@ public class UserController {
     @Autowired
     Paymentdao pay;
     @Autowired
+    Employeedao emp;
+    @Autowired
     JdbcTemplate jt;
 
     @RequestMapping("")
@@ -66,7 +69,29 @@ public class UserController {
     @RequestMapping(value = "/viewproducts", method = RequestMethod.GET)
     public ModelAndView showallproducts() {
         ModelAndView model = new ModelAndView("viewproducts");
-        List<Product> allproducts = pro.showAllProducts();
+        Map<Integer, String> category = new HashMap<Integer, String>();
+        List<Product> allproducts = jt.query(
+                "select product_id,p.name,selling_price,quantity_left,c.name,c.category_id from product p,category c where p.category_id=c.category_id",
+                new ResultSetExtractor<List<Product>>() {
+
+                    public List<Product> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Product> allProduct = new ArrayList<Product>();
+                        while (row.next()) {
+                            Product u = new Product();
+                            u.setProduct_id(row.getInt("product_id"));
+                            u.setName(row.getString("name"));
+                            u.setSelling_price(row.getDouble("selling_price"));
+                            u.setQuantity_left(row.getInt("quantity_left"));
+                            u.setCategory_id(row.getInt("category_id"));
+                            allProduct.add(u);
+                            category.put(row.getInt("category_id"),
+                                    cat.getCategorybyId(row.getInt("category_id")).getName());
+                        }
+                        return allProduct;
+                    }
+
+                });
+        model.addObject("category", category);
         model.addObject("allproducts", allproducts);
         return model;
     }
@@ -74,7 +99,27 @@ public class UserController {
     @RequestMapping(value = "/viewcategories", method = RequestMethod.GET)
     public ModelAndView showallcategories() {
         ModelAndView model = new ModelAndView("viewcategories");
-        List<Category> allcategories = cat.showAllCategories();
+        Map<Integer, String> employee = new HashMap<Integer, String>();
+        List<Category> allcategories = jt.query(
+                "select category_id,c.name,e.name,e.employee_id from category c,employee e where c.employee_id=e.employee_id",
+                new ResultSetExtractor<List<Category>>() {
+
+                    public List<Category> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Category> allCategory = new ArrayList<Category>();
+                        while (row.next()) {
+                            Category u = new Category();
+                            u.setCategory_id(row.getInt("category_id"));
+                            u.setName(row.getString("name"));
+                            u.setEmployee_id(row.getInt("employee_id"));
+                            allCategory.add(u);
+                            employee.put(row.getInt("employee_id"),
+                                    emp.getEmployeebyId(row.getInt("employee_id")).getName());
+                        }
+                        return allCategory;
+                    }
+
+                });
+        model.addObject("employee", employee);
         model.addObject("allcategories", allcategories);
         return model;
     }
