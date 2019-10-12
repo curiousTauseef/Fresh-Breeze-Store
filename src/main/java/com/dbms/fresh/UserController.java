@@ -59,7 +59,7 @@ public class UserController {
     public ModelAndView admin(Principal principal) {
         ModelAndView model = new ModelAndView("userhome");
         User user = userdao.findByUsername(principal.getName());
-        model.addObject("mess", "hi " + user.getName());
+        model.addObject("user", user);
         return model;
     }
 
@@ -191,7 +191,7 @@ public class UserController {
             pro.updateProductquantity(q.getProduct_id(), p.getQuantity_left() - q.getQuantity());
         }
         pay.save(payment.getMethod(), price, order_id);
-        return "redirect:/user";
+        return "redirect:/user/vieworders";
     }
 
     @RequestMapping(value = "/vieworders", method = RequestMethod.GET)
@@ -199,12 +199,10 @@ public class UserController {
         ModelAndView model = new ModelAndView("alluserorders");
         User user = userdao.findByUsername(principal.getName());
         String username = user.getUsername();
-        // List<Orders> allorders = ord.getOrdersbyusername(username);
-        // List<Payment> payments = new ArrayList<Payment>();
         Map<Integer, Payment> payments = new HashMap<Integer, Payment>();
-        List<Orders> allorders = jt.query("select * from orders natural join payment",
+        List<Orders> allorders = jt.query(
+                "select order_id,status,order_date,method,price from orders natural join payment",
                 new ResultSetExtractor<List<Orders>>() {
-
                     public List<Orders> extractData(ResultSet row) throws SQLException, DataAccessException {
                         List<Orders> allOrders = new ArrayList<Orders>();
                         while (row.next()) {
@@ -213,12 +211,8 @@ public class UserController {
                             u.setOrder_id(row.getInt("order_id"));
                             u.setStatus(row.getString("status"));
                             u.setOrder_date(row.getDate("order_date"));
-                            u.setUsername(row.getString("username"));
-                            p.setPayment_id(row.getInt("payment_id"));
-                            p.setPayment_date(row.getDate("payment_date"));
                             p.setMethod(row.getString("method"));
                             p.setPrice(row.getDouble("price"));
-                            p.setOrder_id(row.getInt("order_id"));
                             allOrders.add(u);
                             payments.put(row.getInt("order_id"), p);
                         }
@@ -234,7 +228,26 @@ public class UserController {
     @RequestMapping(value = "/viewdetails/{order_id}", method = RequestMethod.GET)
     public ModelAndView viewdetails(Principal principal, @PathVariable("order_id") int order_id) {
         ModelAndView model = new ModelAndView("orderdetails");
-        List<OrderItem> details = ord.getItemsByOrderId(order_id);
+        Map<Integer, Product> products = new HashMap<Integer, Product>();
+        List<OrderItem> allitems = jt
+                .query("select name,quantity,ord_item_id from product natural join order_item where order_id='"
+                        + order_id + "'", new ResultSetExtractor<List<OrderItem>>() {
+                            public List<OrderItem> extractData(ResultSet row) throws SQLException, DataAccessException {
+                                List<OrderItem> allOrderItem = new ArrayList<OrderItem>();
+                                while (row.next()) {
+                                    OrderItem u = new OrderItem();
+                                    Product p = new Product();
+                                    u.setOrd_item_id(row.getInt("ord_item_id"));
+                                    u.setQuantity(row.getInt("quantity"));
+                                    p.setName(row.getString("name"));
+                                    allOrderItem.add(u);
+                                    products.put(row.getInt("ord_item_id"), p);
+                                }
+                                return allOrderItem;
+                            }
+                        });
+        model.addObject("allitems", allitems);
+        model.addObject("products", products);
         return model;
     }
 

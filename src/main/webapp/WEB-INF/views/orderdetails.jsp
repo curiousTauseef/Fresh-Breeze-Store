@@ -16,41 +16,28 @@ uri="http://www.springframework.org/tags" %>
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
     />
 
-    <title>Welcome ${user.name}</title>
+    <title>All Items</title>
   </head>
   <body>
     <div class="table-title">
-      <h3 align="center">
-        <p>Details of ${user.name}</p>
-        <p>You are a regular ${user.role} of this shop</p>
-      </h3>
+      <h3 align="center">All Items</h3>
       <br />
     </div>
     <table class="table-fill">
       <thead>
         <tr>
-          <th class="text-left">Username</th>
-          <th class="text-left">Name</th>
-          <th class="text-left">Contact</th>
-          <th class="text-left">Email Id</th>
-          <th class="text-left">House No</th>
-          <th class="text-left">Locality</th>
-          <th class="text-left">City</th>
-          <th class="text-left">Account No</th>
+          <th class="text-left">Product</th>
+          <th class="text-left">Quantity</th>
         </tr>
       </thead>
 
       <tbody class="table-hover">
-        <tr>
-          <td align="center">${user.username}</td>
-          <td align="center">${user.name}</td>
-          <td align="center">${user.contact}</td>
-          <td align="center">${user.email}</td>
-          <td align="center">${user.house_no}</td>
-          <td align="center">${user.street_name}</td>
-          <td align="center">${user.city}</td>
-          <td align="center">${user.account_no}</td>
-        </tr>
+        <c:forEach items="${allitems}" var="item">
+          <tr>
+            <td align="center">${products.get(item.ord_item_id).name}</td>
+            <td align="center">${item.quantity}</td>
+          </tr>
+        </c:forEach>
       </tbody>
     </table>
     <br /><br /><br />

@@ -16,9 +16,43 @@ uri="http://www.springframework.org/tags" %>
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
     />
 
-    <title>Welcome</title>
+    <title>Welcome ${user.name}</title>
   </head>
   <body>
-    <p>${mess}</p>
+    <div class="table-title">
+      <h3 align="center">
+        <p>Details of ${user.name}</p>
+        <p>You are a ${user.role} of this shop</p>
+      </h3>
+      <br />
+    </div>
+    <table class="table-fill">
+      <thead>
+        <tr>
+          <th class="text-left">Username</th>
+          <th class="text-left">Name</th>
+          <th class="text-left">Contact</th>
+          <th class="text-left">Email Id</th>
+          <th class="text-left">House No</th>
+          <th class="text-left">Locality</th>
+          <th class="text-left">City</th>
+          <th class="text-left">Account No</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-hover">
+        <tr>
+          <td align="center">${user.username}</td>
+          <td align="center">${user.name}</td>
+          <td align="center">${user.contact}</td>
+          <td align="center">${user.email}</td>
+          <td align="center">${user.house_no}</td>
+          <td align="center">${user.street_name}</td>
+          <td align="center">${user.city}</td>
+          <td align="center">${user.account_no}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br /><br /><br />
   </body>
 </html>

@@ -108,7 +108,7 @@ public class Ordersdao {
 
             public OrderItem mapRow(ResultSet row, int rowNum) throws SQLException {
                 OrderItem u = new OrderItem();
-                u.setOrder_item_id(row.getInt("order_item_id"));
+                u.setOrder_item_id(row.getInt("ord_item_id"));
                 u.setOrder_id(row.getInt("order_id"));
                 u.setProduct_id(row.getInt("product_id"));
                 u.setQuantity(row.getInt("quantity"));

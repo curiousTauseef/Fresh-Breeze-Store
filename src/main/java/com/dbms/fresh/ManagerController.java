@@ -47,7 +47,7 @@ public class ManagerController {
     public ModelAndView admin(Principal principal) {
         ModelAndView model = new ModelAndView("managerhome");
         User user = userdao.findByUsername(principal.getName());
-        model.addObject("mess", "hi " + user.getName());
+        model.addObject("user", user);
         return model;
     }
 

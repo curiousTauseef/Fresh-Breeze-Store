@@ -1,17 +1,17 @@
 package com.dbms.fresh.model;
 
 public class OrderItem {
-    private int order_item_id;
+    private int ord_item_id;
     private int order_id;
     private int product_id;
     private int quantity;
 
-    public int getOrder_item_id() {
-        return this.order_item_id;
+    public int getOrd_item_id() {
+        return this.ord_item_id;
     }
 
-    public void setOrder_item_id(int order_item_id) {
-        this.order_item_id = order_item_id;
+    public void setOrd_item_id(int ord_item_id) {
+        this.ord_item_id = ord_item_id;
     }
 
     public int getOrder_id() {
