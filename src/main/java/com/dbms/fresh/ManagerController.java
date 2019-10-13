@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("/manager")
@@ -471,6 +473,81 @@ public class ManagerController {
         } else {
             model.addObject("check", "false");
         }
+        return model;
+    }
+
+    @RequestMapping(value = "/alltransactions")
+    public ModelAndView alltransactions() {
+        ModelAndView model = new ModelAndView("alltransactions");
+        return model;
+    }
+
+    @RequestMapping(value = "/showalltransactions", method = RequestMethod.POST)
+    public ModelAndView shotransactions(@RequestParam("initial") String initial, @RequestParam("end") String end) {
+        Map<Integer, String> employees = new HashMap<Integer, String>();
+        Map<Integer, String> products = new HashMap<Integer, String>();
+        List<SupplyOrder> s = jt.query(
+                "select supply_order_id,supply_order_date,p.product_id,supplier_id,s.employee_id,supply_order_status,s.quantity,s.price,p.name,e.name from supply_order s,product p,employee e where supply_order_date between '"
+                        + initial + "' and '" + end + "' and p.product_id=s.product_id and e.employee_id=s.employee_id",
+                new ResultSetExtractor<List<SupplyOrder>>() {
+                    public List<SupplyOrder> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<SupplyOrder> allSupplyOrder = new ArrayList<SupplyOrder>();
+                        while (row.next()) {
+                            SupplyOrder s = new SupplyOrder();
+                            s.setSupply_order_id(row.getInt("supply_order_id"));
+                            s.setSupply_order_date(row.getDate("supply_order_date"));
+                            s.setSupply_order_status(row.getString("supply_order_status"));
+                            s.setQuantity(row.getInt("quantity"));
+                            s.setPrice(row.getDouble("price"));
+                            s.setProduct_id(row.getInt("product_id"));
+                            s.setSupplier_id(row.getInt("supplier_id"));
+                            s.setEmployee_id(row.getInt("employee_id"));
+                            allSupplyOrder.add(s);
+                            Employee e = emp.getEmployeebyId(row.getInt("employee_id"));
+                            Product p = pro.getproductbyId(row.getInt("product_id"));
+                            products.put(row.getInt("supply_order_id"), p.getName());
+                            employees.put(row.getInt("supply_order_id"), e.getName());
+                        }
+                        return allSupplyOrder;
+                    }
+                });
+        Double sumofsupplyorder = jt.queryForObject(
+                "select sum(s.price) from supply_order s,product p,employee e where supply_order_date between '"
+                        + initial + "' and '" + end + "' and p.product_id=s.product_id and e.employee_id=s.employee_id",
+                Double.class);
+        Map<Integer, Payment> payments = new HashMap<Integer, Payment>();
+        List<Orders> allorders = jt.query(
+                "select username,order_id,status,order_date,method,price from orders natural join payment where order_date between '"
+                        + initial + "' and '" + end + "'",
+                new ResultSetExtractor<List<Orders>>() {
+                    public List<Orders> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<Orders> allOrders = new ArrayList<Orders>();
+                        while (row.next()) {
+                            Orders u = new Orders();
+                            Payment p = new Payment();
+                            u.setUsername(row.getString("username"));
+                            u.setOrder_id(row.getInt("order_id"));
+                            u.setStatus(row.getString("status"));
+                            u.setOrder_date(row.getDate("order_date"));
+                            p.setMethod(row.getString("method"));
+                            p.setPrice(row.getDouble("price"));
+                            allOrders.add(u);
+                            payments.put(row.getInt("order_id"), p);
+                        }
+                        return allOrders;
+                    }
+                });
+        Double sumorder = jt
+                .queryForObject("select sum(price) from orders natural join payment where order_date between '"
+                        + initial + "' and '" + end + "'", Double.class);
+        ModelAndView model = new ModelAndView("showtransactions");
+        model.addObject("sumsupply", sumofsupplyorder);
+        model.addObject("sumorder", sumorder);
+        model.addObject("payments", payments);
+        model.addObject("allords", allorders);
+        model.addObject("employees", employees);
+        model.addObject("products", products);
+        model.addObject("allorders", s);
         return model;
     }
 }

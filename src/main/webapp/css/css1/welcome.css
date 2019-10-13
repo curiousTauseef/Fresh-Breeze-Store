@@ -1,0 +1,58 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300);
+
+body {
+    background: #c2e59c;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #c2e59c, #64b3f4);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: #666;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+table {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1000px;
+
+    transition: all 0.2s ease;
+
+    transform: translateX(-50%) translateY(-50%);
+
+    background: #fff;
+
+    padding: 20px;
+}
+
+.name {
+    font-size: 30px;
+    border-bottom: 2px solid #888;
+    margin-bottom: 20px;
+}
+
+.name:first-letter {
+    font-size: 300%;
+}
+
+.text-left {
+    width: 70px;
+    font-weight: bold;
+}
+
+.label,
+.phone,
+.mobile,
+.email {
+    display: inline-block;
+}
+
+.details-td {
+    border-right: 1px solid #eee;
+    white-space: nowrap;
+
+    padding: 20px;
+    padding-right: 30px;
+}

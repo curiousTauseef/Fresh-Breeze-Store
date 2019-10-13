@@ -1,0 +1,230 @@
+
+<!-- saved from url=(0050)http://localhost:8080/manager/showalltransactions/ -->
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <!-- {% load static %} -->
+    
+    <title>Fresh Breeze Stores</title>
+    <link rel="stylesheet" href="./Fresh Breeze Stores_files/bootstrap.min.css">
+    <script src="./Fresh Breeze Stores_files/jquery.min.js"></script>
+    <script src="./Fresh Breeze Stores_files/jquery.min.js"></script>
+    <script src="./Fresh Breeze Stores_files/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
+
+<style>
+
+</style></head>
+
+
+<body>
+    <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="http://localhost:8080/manager/showallcategories">Manage Categories</a></li>
+                <li><a href="http://localhost:8080/manager/showallproducts">Manage Products</a></li>
+                <li><a href="http://localhost:8080/manager/showallemployees">Manage Employees</a></li>
+                <li><a href="http://localhost:8080/manager/showallsuppliers">Manage Suppliers</a></li>
+                <li><a href="http://localhost:8080/manager/showallusers">View Customers</a></li>
+                <li><a href="http://localhost:8080/manager/alltransactions">View Transactions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+          <a href="http://localhost:8080/manager/showalltransactions/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="http://localhost:8080/manager">Dashboard</a></li>
+              <li role="separator" class="divider"></li>
+            <li><a href="http://localhost:8080/logout">Logout</a></li>
+          </ul>
+        </li>
+    </ul>
+        </div>
+    </nav><br><br>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="./Fresh Breeze Stores_files/table.css">
+
+  
+    
+    <link rel="stylesheet" href="./Fresh Breeze Stores_files/font-awesome.min.css">
+
+    <title>All Supply Orders</title>
+  
+  
+    <br>
+    <div class="table-title">
+      <h3 align="center">All Supply Orders for the given duration.</h3>
+      <br>
+    </div>
+    <table class="table-fill">
+      <thead>
+        <tr>
+          <th class="text-left">Date</th>
+          <th class="text-left">Status</th>
+          <th class="text-left">Product</th>
+          <th class="text-left">Quantity</th>
+          <th class="text-left">Price</th>
+          <th class="text-left">Managed by (Employee)</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-hover">
+        
+          <tr>
+            <td align="center">2019-10-13</td>
+            <td align="center">delivered</td>
+            <td align="center">Mango</td>
+            <td align="center">50</td>
+            <td align="center">2400.0</td>
+            <td align="center">Jai Prakash Jaiswal</td>
+          </tr>
+        
+          <tr>
+            <td align="center">2019-10-13</td>
+            <td align="center">delivered</td>
+            <td align="center">Tomato Juice</td>
+            <td align="center">20</td>
+            <td align="center">600.0</td>
+            <td align="center">Md Saifuddin</td>
+          </tr>
+        
+          <tr>
+            <td align="center">2019-10-13</td>
+            <td align="center">delivered</td>
+            <td align="center">Gourd Juice</td>
+            <td align="center">10</td>
+            <td align="center">500.0</td>
+            <td align="center">Md Saifuddin</td>
+          </tr>
+        
+          <tr>
+            <td align="center">2019-10-13</td>
+            <td align="center">delivered</td>
+            <td align="center">Mango</td>
+            <td align="center">8</td>
+            <td align="center">384.0</td>
+            <td align="center">Jai Prakash Jaiswal</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <br>
+    <div>
+      <h3 align="center">
+        Total Amount Spent on Supply Orders = Rs.3884.0
+      </h3>
+    </div>
+
+    <div class="table-title">
+      <h3 align="center">All User Orders for the given duration.</h3>
+      <br>
+    </div>
+    <table class="table-fill">
+      <thead>
+        <tr>
+          <th class="text-left">Username</th>
+          <th class="text-left">Status</th>
+          <th class="text-left">Order Date</th>
+          <th class="text-left">Payment Method</th>
+          <th class="text-left">Price</th>
+          <th class="text-left">View Items</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-hover">
+        
+          <tr>
+            <td align="center">hellome</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">online</td>
+            <td align="center">470.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/3&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+          <tr>
+            <td align="center">hellome</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">online</td>
+            <td align="center">90.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/4&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+          <tr>
+            <td align="center">shivanshs9</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">online</td>
+            <td align="center">240.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/5&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+          <tr>
+            <td align="center">adarshv</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">offline</td>
+            <td align="center">380.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/7&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+          <tr>
+            <td align="center">adarshv</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">online</td>
+            <td align="center">680.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/8&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+          <tr>
+            <td align="center">dhruva0206</td>
+            <td align="center">delivered</td>
+            <td align="center">2019-10-13</td>
+            <td align="center">online</td>
+            <td align="center">150.0</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning " onclick="window.location.href=&#39;/manager/viewuserorderdetails/9&#39;">
+                <span></span> Items
+              </button>
+            </td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <br>
+    <div class="table-title">
+      <h3 align="center">
+        Total Amount Earned from User Orders = Rs.2010.0
+      </h3>
+      <br>
+    </div>
+  
+
+</body></html>
