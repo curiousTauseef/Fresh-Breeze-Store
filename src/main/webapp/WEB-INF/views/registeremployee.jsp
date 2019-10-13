@@ -58,8 +58,8 @@
                 <div class="form-group has-danger">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="contact" class="form-control" id="contact"
-                               placeholder="(+91)9119119119" required="true">
+                        <input type="text" name="contact" class="form-control" id="contact" pattern="[6789][0-9]{9}"
+                               placeholder="9191991919" required="true">
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-inr"></i></div>
-                        <input type="text" name="account_no" class="form-control" id="account"
+                        <input type="text" name="account_no" class="form-control" id="account" pattern="[0-9]{9,18}"
                                placeholder="Account No" required="true">
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="adminnavbar.jsp" />
 
 <htmL>
@@ -55,14 +56,16 @@
                 <label for="employee_id">Managed by</label>
             </div>
             <div class="col-md-6">
-                <div class="form-group has-danger">
+			        <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="employee_id" class="form-control" id="employee_id"
-                               placeholder="Employee Id" required="true">
-                    </div>
-                </div>
-            </div>
+                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i>
+							<form:select path="employee_id">
+								<c:forEach var="employee" items="${employees}">
+									<form:option value="${employee.employee_id}" >${employee.name}</form:option>
+								</c:forEach>
+							</form:select>
+						
+					</div></div></div></div>
             
         </div>
         <br><br>

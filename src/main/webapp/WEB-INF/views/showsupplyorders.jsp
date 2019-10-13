@@ -26,7 +26,6 @@ uri="http://www.springframework.org/tags" %>
     <table class="table-fill">
       <thead>
         <tr>
-          <th class="text-left">Id</th>
           <th class="text-left">Date</th>
           <th class="text-left">Status</th>
           <th class="text-left">Product</th>
@@ -39,7 +38,6 @@ uri="http://www.springframework.org/tags" %>
       <tbody class="table-hover">
         <c:forEach items="${allorders}" var="order">
           <tr>
-            <td align="center">${order.supply_order_id}</td>
             <td align="center">${order.supply_order_date}</td>
             <td align="center">${order.supply_order_status}</td>
             <td align="center">${products.get(order.supply_order_id)}</td>

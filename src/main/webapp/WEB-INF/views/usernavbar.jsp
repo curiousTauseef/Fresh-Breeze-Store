@@ -24,7 +24,6 @@
     <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
-                <li><a href="/user">Dashboard</a></li>
                 <li><a href="/user/viewcategories">View Categories</a></li>
                 <li><a href="/user/viewproducts">View Products</a></li>
                 <li><a href="/user/placeorder">Place Order</a></li>
@@ -34,8 +33,8 @@
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
           <ul class="dropdown-menu">
-        
-            <!-- <li role="separator" class="divider"></li> -->
+            <li><a href="/user">Dashboard</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </li>

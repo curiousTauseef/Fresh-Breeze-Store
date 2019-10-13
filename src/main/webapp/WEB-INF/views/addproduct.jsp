@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="adminnavbar.jsp" />
 
 <htmL>
@@ -85,14 +86,16 @@
                 <label for="category_id">Category Id</label>
             </div>
             <div class="col-md-6">
-                <div class="form-group has-danger">
+			        <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-shopping-basket"></i></div>
-                        <input type="text" name="category_id" class="form-control" id="category_id"
-                               placeholder="Category Id" required="true">
-                    </div>
-                </div>
-            </div>
+                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i>
+							<form:select path="category_id">
+								<c:forEach var="category" items="${categories}">
+									<form:option value="${category.category_id}" >${category.name}</form:option>
+								</c:forEach>
+							</form:select>
+						
+					</div></div></div></div>
             
         </div>
         <br><br>

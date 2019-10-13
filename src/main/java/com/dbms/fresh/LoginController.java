@@ -51,17 +51,6 @@ public class LoginController {
         return "redirect:/welcome";
     }
 
-    // @GetMapping(value = { "/login", "/" })
-    // public String login(Model model, String error, String logout) {
-    // if (error != null)
-    // model.addAttribute("error", "Your username and password is invalid.");
-
-    // if (logout != null)
-    // model.addAttribute("message", "You have been logged out successfully.");
-
-    // return "redirect:/login";
-    // }
-
     @GetMapping("/welcome")
     public String welcome(Principal principal) {
         User user = userService.findByUsername(principal.getName());
@@ -69,5 +58,12 @@ public class LoginController {
             return "redirect:/user";
         else
             return "redirect:/manager";
+    }
+
+    @GetMapping("/403")
+    public String page403(Principal principal, Model m) {
+        User user = userService.findByUsername(principal.getName());
+        m.addAttribute("user", user);
+        return "403";
     }
 }

@@ -124,7 +124,6 @@ public class ManagerController {
         Category category = new Category();
         model.addObject("category", category);
         List<Employee> e = emp.showAllEmployees();
-        // System.out.println(e.getName());
         model.addObject("employees", e);
         return model;
     }
@@ -171,6 +170,7 @@ public class ManagerController {
         category.setCategory_id(cat_id);
         category.setName(ca.getName());
         model.addObject("category", category);
+        model.addObject("employees", emp.showAllEmployees());
         return model;
     }
 
@@ -190,6 +190,7 @@ public class ManagerController {
     public ModelAndView addproduct() {
         ModelAndView model = new ModelAndView("addproduct");
         Product product = new Product();
+        model.addObject("categories", cat.showAllCategories());
         model.addObject("product", product);
         return model;
     }
@@ -238,6 +239,7 @@ public class ManagerController {
         product.setProduct_id(pro_id);
         product.setName(pr.getName());
         model.addObject("product", product);
+        model.addObject("categories", cat.showAllCategories());
         return model;
     }
 

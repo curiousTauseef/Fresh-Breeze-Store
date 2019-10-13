@@ -79,8 +79,9 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 type="text"
                 path="contact"
                 required="true"
+                pattern="[6789][0-9]{9}"
                 class="form-control"
-                placeholder="Contact"
+                placeholder="9191991919"
               ></form:input>
               <form:errors path="contact"></form:errors>
             </div>
@@ -92,7 +93,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 path="email"
                 required="true"
                 class="form-control"
-                placeholder="Email"
+                placeholder="you@example.com"
               ></form:input>
               <form:errors path="email"></form:errors>
             </div>
@@ -141,6 +142,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 required="true"
                 class="form-control"
                 placeholder="Account no"
+                pattern="[0-9]{9,18}"
               ></form:input>
               <form:errors path="account_no"></form:errors>
             </div>
