@@ -42,12 +42,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-shopping-basket"></i></div>
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-shopping-basket"></i>
                         <form:select path="type">
 							<form:option value="suggestion" >Suggestion</form:option>
                             <form:option value="review" >Review</form:option>
                             <form:option value="complaint" >Complaint</form:option>
-						</form:select>
+                        </form:select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,14 +61,15 @@
             <div class="col-md-6">
                 <div class="form-group has-danger">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-star"></i></div>
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-star"></i>
                         <form:select path="rating">
 							<form:option value="1" >1</form:option>
                             <form:option value="2" >2</form:option>
                             <form:option value="3" >3</form:option>
                             <form:option value="4" >4</form:option>
                             <form:option value="5" >5</form:option>
-						</form:select>
+                        </form:select>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="usernavbar.jsp" />
-
+<spring:url var="css" value="/css" />
 <htmL>
 <style>
 @media(min-width: 768px) {
@@ -23,10 +23,20 @@
     <title>Place Order</title>
 
     <!-- Stylesheets -->
+     <link rel="stylesheet" type="text/css" href="${css}/css1/table.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>
 <body>
-<br><br><br>
+    <c:choose>
+        <c:when test="${error=='true'}">
+            <div class="table-title">
+                <h3 align="center"><p>You haven't selected any products.</p><br> <button type="button" class="btn btn-danger " onclick="window.location.href='/user/placeorder'">Select Products</button></h3>
+
+            
+            </div>
+        </c:when>
+        <c:otherwise>
+            <br><br><br>
 <div class="container">
 		<form:form method="post" action="/user/finalprocessorder/" class="form-horizontal" role="form">
         <div class="row">
@@ -74,5 +84,8 @@
         </div>
     </form:form>
 </div>
+
+        </c:otherwise>
+    </c:choose>
 </body>
 

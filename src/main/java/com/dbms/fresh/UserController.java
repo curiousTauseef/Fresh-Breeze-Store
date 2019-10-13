@@ -147,12 +147,17 @@ public class UserController {
         User user = userdao.findByUsername(principal.getName());
         String username = user.getUsername();
         List<String> s = c.getProduct_ids();
+        String error = "";
+        if (s.isEmpty()) {
+            error = "true";
+        }
         List<Product> products = new ArrayList<Product>();
         for (String st : s) {
             products.add(pro.getproductbyId(Integer.parseInt(st)));
         }
         model.addObject("products", products);
         model.addObject("username", username);
+        model.addObject("error", error);
         return model;
     }
 

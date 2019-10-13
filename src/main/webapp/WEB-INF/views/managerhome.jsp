@@ -22,33 +22,42 @@ uri="http://www.springframework.org/tags" %>
     <div class="table-title">
       <h3 align="center">
         <p>Details of ${user.name}</p>
-        <p>You are a ${user.role} of this shop</p>
+        <p>ROLE : ${user.role}</p>
       </h3>
       <br />
     </div>
     <table class="table-fill">
-      <thead>
-        <tr>
-          <th class="text-left">Username</th>
-          <th class="text-left">Name</th>
-          <th class="text-left">Contact</th>
-          <th class="text-left">Email Id</th>
-          <th class="text-left">House No</th>
-          <th class="text-left">Locality</th>
-          <th class="text-left">City</th>
-          <th class="text-left">Account No</th>
-        </tr>
-      </thead>
-
       <tbody class="table-hover">
         <tr>
+          <td align="center"><strong>Username</strong></td>
           <td align="center">${user.username}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>Name</strong></td>
           <td align="center">${user.name}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>Contact</strong></td>
           <td align="center">${user.contact}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>Email Id</strong></td>
           <td align="center">${user.email}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>House No</strong></td>
           <td align="center">${user.house_no}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>Locality</strong></td>
           <td align="center">${user.street_name}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>City</strong></td>
           <td align="center">${user.city}</td>
+        </tr>
+        <tr>
+          <td align="center"><strong>Account No</strong></td>
           <td align="center">${user.account_no}</td>
         </tr>
       </tbody>

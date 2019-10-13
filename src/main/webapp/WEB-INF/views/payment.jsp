@@ -43,12 +43,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-shopping-basket"></i></div>
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-shopping-basket"></i>
                         <form:select path="method">
 								
 							<form:option value="online" >Online Payment</form:option>
 							<form:option value="offline" >Offline Payment</form:option>
-						</form:select>
+                        </form:select>
+                        </div>
                     </div>
                 </div>
             </div>
