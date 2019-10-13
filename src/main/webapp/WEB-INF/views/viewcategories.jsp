@@ -26,7 +26,6 @@ uri="http://www.springframework.org/tags" %>
     <table class="table-fill">
       <thead>
         <tr>
-          <th class="text-left">Id</th>
           <th class="text-left">Name</th>
           <th class="text-left">Managed by (Employee)</th>
         </tr>
@@ -35,7 +34,6 @@ uri="http://www.springframework.org/tags" %>
       <tbody class="table-hover">
         <c:forEach items="${allcategories}" var="category">
           <tr>
-            <td align="center">${category.category_id}</td>
             <td align="center">${category.name}</td>
             <td align="center">${employee.get(category.employee_id)}</td>
           </tr>

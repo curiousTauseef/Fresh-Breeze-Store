@@ -361,7 +361,35 @@ public class ManagerController {
     @RequestMapping(value = "/showsupplyorders/{supplier_id}")
     public ModelAndView showsupplyorders(@PathVariable("supplier_id") int supplier_id) {
         ModelAndView model = new ModelAndView("showsupplyorders");
-        List<SupplyOrder> s = sod.getSupplyOrdersbySupplierId(supplier_id);
+        Map<Integer, String> employees = new HashMap<Integer, String>();
+        Map<Integer, String> products = new HashMap<Integer, String>();
+        List<SupplyOrder> s = jt.query(
+                "select supply_order_id,supply_order_date,p.product_id,supplier_id,s.employee_id,supply_order_status,s.quantity,s.price,p.name,e.name from supply_order s,product p,employee e where p.product_id=s.product_id and e.employee_id=s.employee_id and supplier_id='"
+                        + supplier_id + "'",
+                new ResultSetExtractor<List<SupplyOrder>>() {
+                    public List<SupplyOrder> extractData(ResultSet row) throws SQLException, DataAccessException {
+                        List<SupplyOrder> allSupplyOrder = new ArrayList<SupplyOrder>();
+                        while (row.next()) {
+                            SupplyOrder s = new SupplyOrder();
+                            s.setSupply_order_id(row.getInt("supply_order_id"));
+                            s.setSupply_order_date(row.getDate("supply_order_date"));
+                            s.setSupply_order_status(row.getString("supply_order_status"));
+                            s.setQuantity(row.getInt("quantity"));
+                            s.setPrice(row.getDouble("price"));
+                            s.setProduct_id(row.getInt("product_id"));
+                            s.setSupplier_id(row.getInt("supplier_id"));
+                            s.setEmployee_id(row.getInt("employee_id"));
+                            allSupplyOrder.add(s);
+                            Employee e = emp.getEmployeebyId(row.getInt("employee_id"));
+                            Product p = pro.getproductbyId(row.getInt("product_id"));
+                            products.put(row.getInt("supply_order_id"), p.getName());
+                            employees.put(row.getInt("supply_order_id"), e.getName());
+                        }
+                        return allSupplyOrder;
+                    }
+                });
+        model.addObject("employees", employees);
+        model.addObject("products", products);
         model.addObject("allorders", s);
         model.addObject("name", sup.getSupplierbyId(supplier_id).getName());
         return model;

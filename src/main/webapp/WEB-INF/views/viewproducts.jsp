@@ -26,7 +26,6 @@ uri="http://www.springframework.org/tags" %>
     <table class="table-fill">
       <thead>
         <tr>
-          <th class="text-left">Id</th>
           <th class="text-left">Name</th>
           <th class="text-left">Selling Price</th>
           <th class="text-left">Category</th>
@@ -36,7 +35,6 @@ uri="http://www.springframework.org/tags" %>
       <tbody class="table-hover">
         <c:forEach items="${allproducts}" var="product">
           <tr>
-            <td align="center">${product.product_id}</td>
             <td align="center">${product.name}</td>
             <td align="center">${product.selling_price}</td>
             <td align="center">${category.get(product.category_id)}</td>
