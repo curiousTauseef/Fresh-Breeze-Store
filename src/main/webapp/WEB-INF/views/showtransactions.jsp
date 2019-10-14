@@ -87,7 +87,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/viewuserorderdetails/${ord.order_id}'"
+                onclick="window.location.href='/storemanager/viewuserorderdetails/${ord.order_id}'"
               >
                 <span></span> Items
               </button>

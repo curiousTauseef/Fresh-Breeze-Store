@@ -27,7 +27,7 @@
 <body>
 <br><br><br>
 <div class="container">
-		<form:form method="post" modelAttribute="supplier" action="/manager/updatesupplier/" class="form-horizontal" role="form">
+		<form:form method="post" modelAttribute="supplier" action="/storemanager/updatesupplier/" class="form-horizontal" role="form">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">

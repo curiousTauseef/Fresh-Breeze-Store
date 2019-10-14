@@ -49,7 +49,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/updatequantity/${product.product_id}'"
+                onclick="window.location.href='/storemanager/updatequantity/${product.product_id}'"
               >
                 <span></span> Change quantity
               </button>
@@ -58,7 +58,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/updateproduct/${product.product_id}'"
+                onclick="window.location.href='/storemanager/updateproduct/${product.product_id}'"
               >
                 Edit
               </button>
@@ -67,7 +67,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-danger "
-                onclick="window.location.href='/manager/removeproduct/${product.product_id}'"
+                onclick="window.location.href='/storemanager/removeproduct/${product.product_id}'"
               >
                 <span class="glyphicon glyphicon-remove"></span> Remove
               </button>
@@ -83,7 +83,7 @@ uri="http://www.springframework.org/tags" %>
         <button
           type="submit"
           class="btn btn-primary btn-lg"
-          onclick="window.location.href='/manager/addproduct'"
+          onclick="window.location.href='/storemanager/addproduct'"
         >
           <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add Product
         </button>

@@ -56,7 +56,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning"
-                onclick="window.location.href='/manager/showsupplyorders/${supplier.supplier_id}'"
+                onclick="window.location.href='/storemanager/showsupplyorders/${supplier.supplier_id}'"
               >
                 Show All Orders
               </button>
@@ -65,7 +65,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-success "
-                onclick="window.location.href='/manager/supplyorder/${supplier.supplier_id}'"
+                onclick="window.location.href='/storemanager/supplyorder/${supplier.supplier_id}'"
               >
                 Order
               </button>
@@ -74,7 +74,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning"
-                onclick="window.location.href='/manager/updatesupplier/${supplier.supplier_id}'"
+                onclick="window.location.href='/storemanager/updatesupplier/${supplier.supplier_id}'"
               >
                 Edit
               </button>
@@ -83,7 +83,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-danger "
-                onclick="window.location.href='/manager/removesupplier/${supplier.supplier_id}'"
+                onclick="window.location.href='/storemanager/removesupplier/${supplier.supplier_id}'"
               >
                 <span class="glyphicon glyphicon-remove"></span> Remove
               </button>
@@ -99,7 +99,7 @@ uri="http://www.springframework.org/tags" %>
         <button
           type="submit"
           class="btn btn-primary btn-lg"
-          onclick="window.location.href='/manager/registersupplier'"
+          onclick="window.location.href='/storemanager/registersupplier'"
         >
           <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add supplier
         </button>

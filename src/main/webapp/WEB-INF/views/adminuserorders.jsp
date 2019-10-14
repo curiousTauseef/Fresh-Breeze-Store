@@ -46,7 +46,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/viewuserorderdetails/${order.order_id}'"
+                onclick="window.location.href='/storemanager/viewuserorderdetails/${order.order_id}'"
               >
                 <span></span> Items
               </button>
@@ -55,7 +55,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/viewfeedback/${order.order_id}'"
+                onclick="window.location.href='/storemanager/viewfeedback/${order.order_id}'"
               >
                 View Feedback
               </button>

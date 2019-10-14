@@ -57,7 +57,7 @@ public class LoginController {
         if (user.getRole().equals("customer"))
             return "redirect:/user";
         else
-            return "redirect:/manager";
+            return "redirect:/storemanager";
     }
 
     @GetMapping("/403")

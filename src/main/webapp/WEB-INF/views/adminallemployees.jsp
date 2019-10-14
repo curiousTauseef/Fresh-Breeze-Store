@@ -58,7 +58,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/updateemployee/${employee.employee_id}'"
+                onclick="window.location.href='/storemanager/updateemployee/${employee.employee_id}'"
               >
                 Edit
               </button>
@@ -67,7 +67,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-danger "
-                onclick="window.location.href='/manager/removeemployee/${employee.employee_id}'"
+                onclick="window.location.href='/storemanager/removeemployee/${employee.employee_id}'"
               >
                 <span class="glyphicon glyphicon-remove"></span> Remove
               </button>
@@ -83,7 +83,7 @@ uri="http://www.springframework.org/tags" %>
         <button
           type="submit"
           class="btn btn-primary btn-lg"
-          onclick="window.location.href='/manager/registeremployee'"
+          onclick="window.location.href='/storemanager/registeremployee'"
         >
           <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add employee
         </button>

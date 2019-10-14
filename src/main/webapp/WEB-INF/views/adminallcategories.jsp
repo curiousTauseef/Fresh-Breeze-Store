@@ -44,7 +44,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-warning "
-                onclick="window.location.href='/manager/updatecategory/${category.category_id}'"
+                onclick="window.location.href='/storemanager/updatecategory/${category.category_id}'"
               >
                 Edit
               </button>
@@ -53,7 +53,7 @@ uri="http://www.springframework.org/tags" %>
               <button
                 type="button"
                 class="btn btn-danger "
-                onclick="window.location.href='/manager/removecategory/${category.category_id}'"
+                onclick="window.location.href='/storemanager/removecategory/${category.category_id}'"
               >
                 <span class="glyphicon glyphicon-remove"></span> Remove
               </button>
@@ -69,7 +69,7 @@ uri="http://www.springframework.org/tags" %>
         <button
           type="submit"
           class="btn btn-primary btn-lg"
-          onclick="window.location.href='/manager/addcategory'"
+          onclick="window.location.href='/storemanager/addcategory'"
         >
           <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add category
         </button>

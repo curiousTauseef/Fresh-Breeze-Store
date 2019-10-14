@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping("/manager")
+@RequestMapping("/storemanager")
 @Controller
 public class ManagerController {
     @Autowired
@@ -83,7 +83,7 @@ public class ManagerController {
     public String registeremployeeProcess(@Valid @ModelAttribute("employee") Employee e, BindingResult result) {
         emp.save(e.getName(), e.getContact(), e.getEmail(), e.getHouse_no(), e.getStreet_name(), e.getCity(),
                 e.getJoining_date(), e.getSalary(), e.getAccount_no());
-        return "redirect:/manager/showallemployees";
+        return "redirect:/storemanager/showallemployees";
     }
 
     @RequestMapping(value = "/showallemployees", method = RequestMethod.GET)
@@ -110,13 +110,13 @@ public class ManagerController {
     public String updateEmployeeProcess(@Valid @ModelAttribute("employee") Employee e, BindingResult result) {
         emp.updateEmployee(e.getEmployee_id(), e.getName(), e.getContact(), e.getEmail(), e.getHouse_no(),
                 e.getStreet_name(), e.getCity(), e.getJoining_date(), e.getSalary(), e.getAccount_no());
-        return "redirect:/manager/showallemployees";
+        return "redirect:/storemanager/showallemployees";
     }
 
     @RequestMapping(value = "/removeemployee/{employee_id}")
     public String removeEmployee(@PathVariable(value = "employee_id") int emp_id) {
         emp.deleteEmployee(emp_id);
-        return "redirect:/manager/showallemployees";
+        return "redirect:/storemanager/showallemployees";
     }
 
     @RequestMapping(value = "/addcategory", method = RequestMethod.GET)
@@ -132,7 +132,7 @@ public class ManagerController {
     @RequestMapping(value = "/addcategory", method = RequestMethod.POST)
     public String addCategoryProcess(@Valid @ModelAttribute("category") Category c, BindingResult result) {
         cat.save(c.getName(), c.getEmployee_id());
-        return "redirect:/manager/showallcategories";
+        return "redirect:/storemanager/showallcategories";
     }
 
     @RequestMapping(value = "/showallcategories", method = RequestMethod.GET)
@@ -178,13 +178,13 @@ public class ManagerController {
     @RequestMapping(value = "/updatecategory", method = RequestMethod.POST)
     public String updateCategoryProcess(@Valid @ModelAttribute("category") Category c, BindingResult result) {
         cat.updateCategory(c.getCategory_id(), c.getName(), c.getEmployee_id());
-        return "redirect:/manager/showallcategories";
+        return "redirect:/storemanager/showallcategories";
     }
 
     @RequestMapping(value = "/removecategory/{category_id}", method = RequestMethod.GET)
     public String removecategory(@PathVariable(value = "category_id") int cat_id) {
         cat.deleteCategory(cat_id);
-        return "redirect:/manager/showallcategories";
+        return "redirect:/storemanager/showallcategories";
     }
 
     @RequestMapping(value = "/addproduct", method = RequestMethod.GET)
@@ -199,7 +199,7 @@ public class ManagerController {
     @RequestMapping(value = "/addproduct", method = RequestMethod.POST)
     public String addProductProcess(@Valid @ModelAttribute("product") Product p, BindingResult result) {
         pro.save(p.getName(), p.getSelling_price(), p.getQuantity_left(), p.getCategory_id());
-        return "redirect:/manager/showallproducts";
+        return "redirect:/storemanager/showallproducts";
     }
 
     @RequestMapping(value = "/showallproducts", method = RequestMethod.GET)
@@ -248,7 +248,7 @@ public class ManagerController {
     public String updateproductProcess(@Valid @ModelAttribute("product") Product p, BindingResult result) {
         pro.updateproduct(p.getProduct_id(), p.getName(), p.getSelling_price(), p.getQuantity_left(),
                 p.getCategory_id());
-        return "redirect:/manager/showallproducts";
+        return "redirect:/storemanager/showallproducts";
     }
 
     @RequestMapping(value = "/updatequantity/{product_id}", method = RequestMethod.GET)
@@ -280,13 +280,13 @@ public class ManagerController {
             m.addAttribute("pr", pr);
             return "errorchange";
         }
-        return "redirect:/manager/showallproducts";
+        return "redirect:/storemanager/showallproducts";
     }
 
     @RequestMapping(value = "/removeproduct/{product_id}", method = RequestMethod.GET)
     public String removeproduct(@PathVariable(value = "product_id") int pro_id) {
         pro.deleteproduct(pro_id);
-        return "redirect:/manager/showallproducts";
+        return "redirect:/storemanager/showallproducts";
     }
 
     @RequestMapping(value = "/registersupplier", method = RequestMethod.GET)
@@ -303,7 +303,7 @@ public class ManagerController {
         sup.save(e.getName(), e.getContact(), e.getEmail(), e.getHouse_no(), e.getStreet_name(), e.getCity(),
                 e.getAccount_no());
         // System.out.print(e.getName());
-        return "redirect:/manager/showallsuppliers";
+        return "redirect:/storemanager/showallsuppliers";
     }
 
     @RequestMapping(value = "/showallsuppliers", method = RequestMethod.GET)
@@ -329,13 +329,13 @@ public class ManagerController {
     public String updatesupplierProcess(@Valid @ModelAttribute("supplier") Supplier e, BindingResult result) {
         sup.updateSupplier(e.getSupplier_id(), e.getName(), e.getContact(), e.getEmail(), e.getHouse_no(),
                 e.getStreet_name(), e.getCity(), e.getAccount_no());
-        return "redirect:/manager/showallsuppliers";
+        return "redirect:/storemanager/showallsuppliers";
     }
 
     @RequestMapping(value = "/removesupplier/{supplier_id}")
     public String removesupplier(@PathVariable(value = "supplier_id") int sup_id) {
         sup.deleteSupplier(sup_id);
-        return "redirect:/manager/showallsuppliers";
+        return "redirect:/storemanager/showallsuppliers";
     }
 
     @RequestMapping(value = "/supplyorder/{supplier_id}", method = RequestMethod.GET)
@@ -358,7 +358,7 @@ public class ManagerController {
         int supplier_id = s.getSupplier_id();
         sod.save(s.getQuantity(), price, s.getProduct_id(), supplier_id, employee.getEmployee_id());
         pro.updateProductquantity(s.getProduct_id(), product.getQuantity_left() + s.getQuantity());
-        return "redirect:/manager/showsupplyorders/" + supplier_id;
+        return "redirect:/storemanager/showsupplyorders/" + supplier_id;
     }
 
     @RequestMapping(value = "/showsupplyorders/{supplier_id}")
