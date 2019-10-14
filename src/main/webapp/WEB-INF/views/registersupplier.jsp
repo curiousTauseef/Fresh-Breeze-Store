@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2>Register Here</h2>
+                <h2>Register Supplier</h2>
                 <hr>
             </div>
         </div>
@@ -135,7 +135,7 @@
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-inr"></i></div>
                         <input type="text" name="account_no" class="form-control" id="account" pattern="[0-9]{9,18}"
-                               placeholder="Account No" required="true">
+                              placeholder="9 to 18 digits only" required="true">
                     </div>
                 </div>
             </div>

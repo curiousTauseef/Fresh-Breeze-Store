@@ -141,7 +141,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 path="account_no"
                 required="true"
                 class="form-control"
-                placeholder="Account no"
+                placeholder="Account No. (9 to 18 digits only)"
                 pattern="[0-9]{9,18}"
               ></form:input>
               <form:errors path="account_no"></form:errors>

@@ -320,4 +320,17 @@ public class UserController {
         return "redirect:/user/vieworders";
     }
 
+    @RequestMapping(value = "/viewfeedback/{order_id}")
+    public ModelAndView viewfeedback(@PathVariable("order_id") int order_id) {
+        ModelAndView model = new ModelAndView("userviewfeedback");
+        if (ord.feebackExist(order_id)) {
+            Feedback feedback = ord.getFeedback(order_id);
+            model.addObject("check", "true");
+            model.addObject("feedback", feedback);
+        } else {
+            model.addObject("check", "false");
+        }
+        return model;
+    }
+
 }

@@ -485,9 +485,10 @@ public class ManagerController {
     public ModelAndView shotransactions(@RequestParam("initial") String initial, @RequestParam("end") String end) {
         Map<Integer, String> employees = new HashMap<Integer, String>();
         Map<Integer, String> products = new HashMap<Integer, String>();
+        Map<Integer, String> suppliers = new HashMap<Integer, String>();
         List<SupplyOrder> s = jt.query(
-                "select supply_order_id,supply_order_date,p.product_id,supplier_id,s.employee_id,supply_order_status,s.quantity,s.price,p.name,e.name from supply_order s,product p,employee e where supply_order_date between '"
-                        + initial + "' and '" + end + "' and p.product_id=s.product_id and e.employee_id=s.employee_id",
+                "select supply_order_id,supply_order_date,p.product_id,s.supplier_id,s.employee_id,supply_order_status,s.quantity,s.price,p.name,e.name,su.name from supply_order s,product p,employee e,supplier su where s.supplier_id=su.supplier_id and e.employee_id=s.employee_id and s.product_id=p.product_id and supply_order_date between '"
+                        + initial + "' and '" + end + "'",
                 new ResultSetExtractor<List<SupplyOrder>>() {
                     public List<SupplyOrder> extractData(ResultSet row) throws SQLException, DataAccessException {
                         List<SupplyOrder> allSupplyOrder = new ArrayList<SupplyOrder>();
@@ -504,8 +505,10 @@ public class ManagerController {
                             allSupplyOrder.add(s);
                             Employee e = emp.getEmployeebyId(row.getInt("employee_id"));
                             Product p = pro.getproductbyId(row.getInt("product_id"));
+                            Supplier x = sup.getSupplierbyId(row.getInt("supplier_id"));
                             products.put(row.getInt("supply_order_id"), p.getName());
                             employees.put(row.getInt("supply_order_id"), e.getName());
+                            suppliers.put(row.getInt("supply_order_id"), x.getName());
                         }
                         return allSupplyOrder;
                     }
@@ -546,6 +549,7 @@ public class ManagerController {
         model.addObject("allords", allorders);
         model.addObject("employees", employees);
         model.addObject("products", products);
+        model.addObject("supplier", suppliers);
         model.addObject("allorders", s);
         return model;
     }

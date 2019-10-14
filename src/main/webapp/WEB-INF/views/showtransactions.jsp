@@ -28,6 +28,7 @@ uri="http://www.springframework.org/tags" %>
       <thead>
         <tr>
           <th class="text-left">Date</th>
+          <th class="text-left">Supplier</th>
           <th class="text-left">Status</th>
           <th class="text-left">Product</th>
           <th class="text-left">Quantity</th>
@@ -40,11 +41,13 @@ uri="http://www.springframework.org/tags" %>
         <c:forEach items="${allorders}" var="order">
           <tr>
             <td align="center">${order.supply_order_date}</td>
+            <td align="center">${supplier.get(order.supply_order_id)}</td>
             <td align="center">${order.supply_order_status}</td>
             <td align="center">${products.get(order.supply_order_id)}</td>
             <td align="center">${order.quantity}</td>
             <td align="center">${order.price}</td>
             <td align="center">${employees.get(order.supply_order_id)}</td>
+
           </tr>
         </c:forEach>
       </tbody>

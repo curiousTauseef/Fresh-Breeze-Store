@@ -32,6 +32,7 @@ uri="http://www.springframework.org/tags" %>
           <th class="text-left">Price</th>
           <th class="text-left">View Items</th>
           <th class="text-left">Add Feedback</th>
+          <th class="text-left">View Feedback</th>
         </tr>
       </thead>
 
@@ -70,6 +71,29 @@ uri="http://www.springframework.org/tags" %>
                     onclick="window.location.href='/user/addfeedback/${order.order_id}'"
                   >
                     Add Feedback
+                  </button>
+                </c:otherwise>
+              </c:choose>
+            </td>
+            <td class="text-center">
+              <c:choose>
+                <c:when test="${check.get(order.order_id)}">
+                  <button
+                    type="button"
+                    class="btn btn-warning "
+                    onclick="window.location.href='/user/viewfeedback/${order.order_id}'"
+                  >
+                    View Feedback
+                  </button>
+                </c:when>
+                <c:otherwise>
+                  <button
+                    type="button"
+                    disabled
+                    class="btn btn-warning "
+                    onclick="window.location.href='/user/viewfeedback/${order.order_id}'"
+                  >
+                    View Feedback
                   </button>
                 </c:otherwise>
               </c:choose>
